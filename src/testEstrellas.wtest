@@ -1,0 +1,35 @@
+import luchadores.*
+import peleas.*
+
+describe "los equipos son pamela y tulipan contra toro y pocardo"{
+
+	fixture {
+		partida.primerEquipo(tulipan, pamela)
+		partida.segundoEquipo(toro, pocardo)
+	}
+
+	test "sin pelear, ganan tulipan y pamela" {
+		assert.that(partida.obtenerGritoGanador() == [ "Hora de cuidar a las plantas", "acá pasó la Pamela"])
+	}
+
+	test "toro termina con una cinta y una manguera luego de luchar"{
+		toro.lucharContraEquipo(partida.primerEquipo())
+		assert.that(toro.inventario() == ["manguera", "cintaDePapel"])
+	}
+	
+	test "luego de la pelea, pocardo termina con 3800 de energia"{
+		partida.partida()
+		assert.that(pocardo.energia() == 3800)
+	}
+	
+	test "habiendo peleado, todavia ganan tulipan y pamela"{
+		assert.that(partida.partida() == [ "Hora de cuidar a las plantas", "acá pasó la Pamela"])
+		
+	}
+	
+	test "en la pelea, pamela pierde un item"{
+		partida.partida()
+		assert.that(pamela.inventario().size() == 3)
+	}
+}
+
